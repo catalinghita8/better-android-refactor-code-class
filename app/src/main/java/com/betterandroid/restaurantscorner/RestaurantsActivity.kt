@@ -3,19 +3,16 @@ package com.betterandroid.restaurantscorner
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import android.view.LayoutInflater
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import android.view.LayoutInflater
+import android.view.View
 import com.betterandroid.restaurantscorner.mocks.MockCreator
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.betterandroid.restaurantscorner.mocks.RestaurantsAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import io.reactivex.schedulers.Schedulers
-import com.bumptech.glide.Glide
-import com.betterandroid.restaurantscorner.R
 import kotlinx.android.synthetic.main.activity_restaurants.*
 import java.util.*
 
@@ -36,10 +33,10 @@ class RestaurantsActivity : AppCompatActivity() {
     }
 
     private fun showRestaurants() {
-        val restClient = RestaurantsRestClient()
+        val client = RestaurantsRestClient()
         val userId = MockCreator.getUserId()
         disposable.add(
-            restClient.getRestaurants(userId)
+            client.getRestaurants(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
@@ -104,17 +101,21 @@ class RestaurantsActivity : AppCompatActivity() {
                            )
                         )
                     }
-                    restaurantsAdapter!!.restaurants = displayRestaurants
-                    restaurantsAdapter!!.clickListener =
-                        object : RestaurantsAdapter.RestaurantClickListener {
-                            override fun onRestaurantClicked(restaurantId: Int) {
-                                Toast.makeText(
-                                    this@RestaurantsActivity,
-                                    "Pressed a restaurant!",
-                                    Toast.LENGTH_LONG
-                                ).show()
+
+                    val adapter = restaurantsAdapter
+                    if(adapter != null) {
+                        adapter.restaurants = displayRestaurants
+                        adapter.clickListener =
+                            object : RestaurantsAdapter.RestaurantClickListener {
+                                override fun onRestaurantClicked(restaurantId: Int) {
+                                    Toast.makeText(
+                                        this@RestaurantsActivity,
+                                        "Pressed a restaurant!",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
                             }
-                        }
+                    }
                 }, {})
         )
     }

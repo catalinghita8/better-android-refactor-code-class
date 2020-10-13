@@ -1,14 +1,11 @@
-package com.betterandroid.restaurantscorner.mocks
+package com.betterandroid.restaurantscorner
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.betterandroid.restaurantscorner.R
-import com.betterandroid.restaurantscorner.Restaurant
-import com.betterandroid.restaurantscorner.RestaurantDisplayItem
 import kotlinx.android.synthetic.main.item_restaurant.view.*
 
 class RestaurantsAdapter() :
@@ -47,17 +44,17 @@ class RestaurantsAdapter() :
                 
                 when(restaurant.type) {
                     "TAKE_AWAY" -> {
-                        restaurantFabIcon.setImageDrawable(context.getDrawable(R.drawable.take_away))
+                        restaurantFabIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.take_away))
                         restaurantType.text = "Take away"
                         restaurantType.setTextColor(context.getColor(R.color.orange))
                     }
                     "EAT_IN" -> {
-                        restaurantFabIcon.setImageDrawable(context.getDrawable(R.drawable.eat_in))
+                        restaurantFabIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.eat_in))
                         restaurantType.text = "Eat in"
                         restaurantType.setTextColor(context.getColor(R.color.brown))
                     }
                     "DRIVE_THROUGH" -> {
-                        restaurantFabIcon.setImageDrawable(context.getDrawable(R.drawable.drive_through))
+                        restaurantFabIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drive_through))
                         restaurantType.text = "Drive T"
                         restaurantType.setTextColor(context.getColor(R.color.colorAccent))
                     }
