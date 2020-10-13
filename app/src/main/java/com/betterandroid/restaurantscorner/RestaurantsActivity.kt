@@ -43,7 +43,7 @@ class RestaurantsActivity : AppCompatActivity() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
-                    val restaurants = response.restaurants // TODO rename to responseRestaurants
+                    val restaurants = response.restaurants
                     val parsedRestaurants = arrayListOf<Restaurant>()
 
                     if (restaurants != null) {
@@ -89,8 +89,6 @@ class RestaurantsActivity : AppCompatActivity() {
                         val distance = R * c
                         Log.d("DISTANCE_LOGS", "found distance at $distance")
                         filteredRestaurant.distance = Math.sqrt(Math.pow(distance, 2.0) + 0.0).toInt()
-
-                        // TODO keep ur logic simple and clean when u can, use Location.distanceBetween
                     }
                     Collections.sort(filteredRestaurants, RestaurantDistanceSorter())
 
@@ -125,4 +123,5 @@ class RestaurantsActivity : AppCompatActivity() {
         super.onDestroy()
         disposable.dispose()
     }
+
 }
