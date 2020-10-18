@@ -26,7 +26,9 @@ class RestaurantsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_restaurants)
         restaurantsAdapter = RestaurantsAdapter()
         recyclerViewRestaurants.apply {
-            layoutManager = LinearLayoutManager(context!!, LinearLayoutManager.VERTICAL, false)
+            layoutManager = LinearLayoutManager(context!!,
+                LinearLayoutManager.VERTICAL,
+                false)
             this.adapter = restaurantsAdapter
         }
         showRestaurants()
@@ -45,7 +47,8 @@ class RestaurantsActivity : AppCompatActivity() {
 
                     if (restaurants != null) {
                         for (responseRestaurant in restaurants) {
-                            if (responseRestaurant.name != null && responseRestaurant.imageUrl != null) {
+                            if (responseRestaurant.name != null
+                                && responseRestaurant.imageUrl != null) {
                                 val location = SimpleLocation(
                                     responseRestaurant.locationLatitude,
                                     responseRestaurant.locationLongitude
@@ -76,16 +79,20 @@ class RestaurantsActivity : AppCompatActivity() {
                         val userLong = MockCreator.getUserLongitude()
 
                         val R = 6371 // Radius of the earth
-                        val latDistance = Math.toRadians(userLat - filteredRestaurant.location.latitude)
-                        val lonDistance = Math.toRadians(userLong - filteredRestaurant.location.longitude)
-                        val a = (Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                        val latDistance = Math.toRadians(userLat
+                                - filteredRestaurant.location.latitude)
+                        val lonDistance = Math.toRadians(userLong
+                                - filteredRestaurant.location.longitude)
+                        val a = (Math.sin(latDistance / 2)
+                                * Math.sin(latDistance / 2)
                                 + (Math.cos(Math.toRadians(filteredRestaurant.location.latitude))
                                 * Math.cos(Math.toRadians(userLat))
                                 * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2)))
                         val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
                         val distance = R * c
                         Log.d("DISTANCE_LOGS", "found distance at $distance")
-                        filteredRestaurant.distance = Math.sqrt(Math.pow(distance, 2.0) + 0.0).toInt()
+                        filteredRestaurant.distance = Math.sqrt(
+                            Math.pow(distance, 2.0) + 0.0).toInt()
                     }
                     Collections.sort(filteredRestaurants, RestaurantDistanceSorter())
 
