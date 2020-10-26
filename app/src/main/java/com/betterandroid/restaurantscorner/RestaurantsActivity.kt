@@ -64,7 +64,11 @@ class RestaurantsActivity : AppCompatActivity() {
                     displayName = "Restaurant ${restaurant.name}",
                     displayDistance = "at ${restaurant.distance} KM distance",
                     imageUrl = restaurant.imageUrl,
-                    type = restaurant.type
+                    type = when(restaurant.type) {
+                        "EAT_IN" -> RestaurantType.EAT_IN
+                        "TAKE_AWAY" -> RestaurantType.TAKE_AWAY
+                        else -> RestaurantType.DRIVE_THROUGH
+                    }
                 )
             )
         }

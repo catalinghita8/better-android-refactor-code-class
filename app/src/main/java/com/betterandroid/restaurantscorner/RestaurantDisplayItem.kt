@@ -5,5 +5,5 @@ data class RestaurantDisplayItem(
     val displayName: String,
     val displayDistance: String,
     val imageUrl: String,
-    var type: String
+    var type: RestaurantType
 )
