@@ -2,7 +2,6 @@ package com.betterandroid.restaurantscorner
 
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,12 +32,17 @@ class RestaurantsActivity : AppCompatActivity() {
         showRestaurants()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.dispose()
+    }
+
     private fun showRestaurants() {
         getRestaurants { response ->
             // Parsing, filtering, displaying
             val parsedRestaurants = parseRestaurants(response)
             val filteredRestaurants = filterRestaurants(parsedRestaurants)
-            prepareRestaurants(filteredRestaurants)
+            displayRestaurants(filteredRestaurants)
         }
     }
 
@@ -51,20 +55,22 @@ class RestaurantsActivity : AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ response ->
                     completionHandler.invoke(response)
-                }, { })
+                }, {
+
+                })
         )
     }
 
-    private fun prepareRestaurants(filteredRestaurants: ArrayList<Restaurant>) {
+    private fun displayRestaurants(restaurants: ArrayList<Restaurant>) {
         val displayRestaurants = arrayListOf<RestaurantDisplayItem>()
-        filteredRestaurants.forEach { restaurant ->
+        restaurants.forEach { restaurant ->
             displayRestaurants.add(
                 RestaurantDisplayItem(
                     id = restaurant.id,
                     displayName = "Restaurant ${restaurant.name}",
                     displayDistance = "at ${restaurant.distance} KM distance",
                     imageUrl = restaurant.imageUrl,
-                    type = when(restaurant.type) {
+                    type = when (restaurant.type) {
                         "EAT_IN" -> RestaurantType.EAT_IN
                         "TAKE_AWAY" -> RestaurantType.TAKE_AWAY
                         else -> RestaurantType.DRIVE_THROUGH
@@ -89,14 +95,13 @@ class RestaurantsActivity : AppCompatActivity() {
         }
     }
 
-    private fun filterRestaurants(parsedRestaurants: ArrayList<Restaurant>): ArrayList<Restaurant> {
+    private fun filterRestaurants(restaurants: ArrayList<Restaurant>): ArrayList<Restaurant> {
         val filteredRestaurants = arrayListOf<Restaurant>()
-        for (parsedRestaurant in parsedRestaurants) {
+        for (parsedRestaurant in restaurants) {
             if (parsedRestaurant.closingHour < 6)
                 filteredRestaurants.add(parsedRestaurant)
         }
 
-        // val latitude = MockCreator.getUserLatitude()
         for (filteredRestaurant in filteredRestaurants) {
             val userLat = MockCreator.getUserLatitude()
             val userLong = MockCreator.getUserLongitude()
@@ -107,10 +112,8 @@ class RestaurantsActivity : AppCompatActivity() {
                 filteredRestaurant.location.longitude,
                 distance
             )
-            val distanceResult = distance[0]/1000
+            val distanceResult = distance[0] / 1000
             filteredRestaurant.distance = distanceResult.toInt()
-            Log.d("DISTANCE_LOGS", "found distance at $distanceResult")
-
         }
         Collections.sort(filteredRestaurants, RestaurantDistanceSorter())
         return filteredRestaurants
@@ -143,11 +146,6 @@ class RestaurantsActivity : AppCompatActivity() {
             }
         }
         return parsedRestaurants
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        disposable.dispose()
     }
 
 }
