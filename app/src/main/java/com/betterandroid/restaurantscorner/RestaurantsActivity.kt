@@ -95,7 +95,7 @@ class RestaurantsActivity : AppCompatActivity() {
         }
     }
 
-    private fun filterRestaurants(restaurants: ArrayList<Restaurant>): ArrayList<Restaurant> {
+    private fun filterRestaurants(restaurants: List<Restaurant>): ArrayList<Restaurant> {
         val filteredRestaurants = arrayListOf<Restaurant>()
         for (parsedRestaurant in restaurants) {
             if (parsedRestaurant.closingHour < 6)
@@ -119,33 +119,25 @@ class RestaurantsActivity : AppCompatActivity() {
         return filteredRestaurants
     }
 
-    private fun parseRestaurants(response: RestaurantListResponse): ArrayList<Restaurant> {
-        val restaurants = response.restaurants
-        val parsedRestaurants = arrayListOf<Restaurant>()
-
-        if (restaurants != null) {
-            for (responseRestaurant in restaurants) {
-                if (responseRestaurant.name != null
-                    && responseRestaurant.imageUrl != null
-                ) {
-                    val location = SimpleLocation(
-                        responseRestaurant.locationLatitude,
-                        responseRestaurant.locationLongitude
-                    )
-                    parsedRestaurants.add(
-                        Restaurant(
-                            id = responseRestaurant.id,
-                            name = responseRestaurant.name,
-                            imageUrl = responseRestaurant.imageUrl,
-                            location = location,
-                            closingHour = responseRestaurant.closingHour,
-                            type = responseRestaurant.type
-                        )
-                    )
-                }
-            }
-        }
-        return parsedRestaurants
+    private fun parseRestaurants(response: RestaurantListResponse): List<Restaurant> {
+        return response.restaurants
+            ?.filter { restaurantResponse ->
+                restaurantResponse.name != null
+                        && restaurantResponse.imageUrl != null
+            }?.map { restaurantResponse ->
+                val location = SimpleLocation(
+                    restaurantResponse.locationLatitude,
+                    restaurantResponse.locationLongitude
+                )
+                return@map Restaurant(
+                    id = restaurantResponse.id,
+                    name = restaurantResponse.name!!,
+                    imageUrl = restaurantResponse.imageUrl!!,
+                    location = location,
+                    closingHour = restaurantResponse.closingHour,
+                    type = restaurantResponse.type
+                )
+            }.orEmpty()
     }
 
 }
