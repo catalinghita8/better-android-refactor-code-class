@@ -10,7 +10,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_restaurants.*
-import java.util.*
 
 class RestaurantsActivity : AppCompatActivity() {
 
@@ -76,20 +75,18 @@ class RestaurantsActivity : AppCompatActivity() {
             )
         }
 
-        val adapter = restaurantsAdapter
-        if (adapter != null) {
-            adapter.restaurants = displayRestaurants
-            adapter.clickListener =
-                object : RestaurantsAdapter.RestaurantClickListener {
-                    override fun onRestaurantClicked(restaurantId: Int) {
-                        Toast.makeText(
-                            this@RestaurantsActivity,
-                            "Pressed a restaurant!",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
+        restaurantsAdapter!!.restaurants = displayRestaurants
+        restaurantsAdapter!!.clickListener =
+            object : RestaurantsAdapter.RestaurantClickListener {
+                override fun onRestaurantClicked(restaurantId: Int) {
+                    Toast.makeText(
+                        this@RestaurantsActivity,
+                        "Pressed a restaurant!",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
-        }
+            }
+
     }
 
     private fun filterRestaurants(restaurants: List<Restaurant>): List<Restaurant> {
