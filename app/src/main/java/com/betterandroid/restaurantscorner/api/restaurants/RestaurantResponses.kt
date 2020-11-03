@@ -1,4 +1,4 @@
-package com.betterandroid.restaurantscorner
+package com.betterandroid.restaurantscorner.api.restaurants
 
 import com.google.gson.annotations.SerializedName
 

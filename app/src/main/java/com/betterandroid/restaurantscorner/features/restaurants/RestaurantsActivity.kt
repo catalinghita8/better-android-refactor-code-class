@@ -1,9 +1,14 @@
-package com.betterandroid.restaurantscorner
+package com.betterandroid.restaurantscorner.features.restaurants
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.betterandroid.restaurantscorner.*
+import com.betterandroid.restaurantscorner.api.restaurants.RestaurantsRestClient
+import com.betterandroid.restaurantscorner.business.restaurants.RestaurantRules
+import com.betterandroid.restaurantscorner.data.restaurants.RestaurantParser
+import com.betterandroid.restaurantscorner.domain.models.restaurants.Restaurant
 import kotlinx.android.synthetic.main.activity_restaurants.*
 
 class RestaurantsActivity : AppCompatActivity() {

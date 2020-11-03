@@ -1,7 +1,7 @@
 package com.betterandroid.restaurantscorner.mocks
 
-import com.betterandroid.restaurantscorner.RestaurantListResponse
-import com.betterandroid.restaurantscorner.RestaurantResponse
+import com.betterandroid.restaurantscorner.api.restaurants.RestaurantListResponse
+import com.betterandroid.restaurantscorner.api.restaurants.RestaurantResponse
 import io.reactivex.Single
 
 /**

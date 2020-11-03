@@ -1,4 +1,8 @@
-package com.betterandroid.restaurantscorner
+package com.betterandroid.restaurantscorner.features.restaurants
+
+import com.betterandroid.restaurantscorner.domain.models.restaurants.Restaurant
+import com.betterandroid.restaurantscorner.domain.models.restaurants.RestaurantDisplayItem
+import com.betterandroid.restaurantscorner.domain.models.restaurants.RestaurantType
 
 class RestaurantsViewModel {
 

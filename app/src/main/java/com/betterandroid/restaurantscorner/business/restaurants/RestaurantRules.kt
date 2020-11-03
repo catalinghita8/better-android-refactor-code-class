@@ -1,6 +1,7 @@
-package com.betterandroid.restaurantscorner
+package com.betterandroid.restaurantscorner.business.restaurants
 
 import android.location.Location
+import com.betterandroid.restaurantscorner.domain.models.restaurants.Restaurant
 import com.betterandroid.restaurantscorner.mocks.MockCreator
 
 class RestaurantRules {

@@ -1,4 +1,8 @@
-package com.betterandroid.restaurantscorner
+package com.betterandroid.restaurantscorner.data.restaurants
+
+import com.betterandroid.restaurantscorner.api.restaurants.RestaurantListResponse
+import com.betterandroid.restaurantscorner.domain.models.restaurants.Restaurant
+import com.betterandroid.restaurantscorner.domain.models.restaurants.SimpleLocation
 
 class RestaurantParser {
     fun parseRestaurants(response: RestaurantListResponse): List<Restaurant> {
