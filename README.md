@@ -1,7 +1,7 @@
 # Clean Android code class
 ![Clean Android code class imahe](https://i.imgur.com/fVPzBeW.png)
 
-This repository acts as project resource references to the **Clean Android code Skillshare class**. 
+This repository acts as project resource references to the **Clean Android code class**. 
 In this class we will take on together a dirty existing  project - an app about restaurants and we will learn how to identify which code can be refactored and then finally we will clean the entire project.
 
 This is the Github repository page for all the coding solutions. **You can directly download from here the starting point of the project so you can follow with the class videos.**
